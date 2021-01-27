@@ -1,0 +1,22 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "## Your Task",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElderBass/Team-Profile-Generator.git"
+  },
+  "author": "Seth Zygarlicke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ElderBass/Team-Profile-Generator/issues"
+  },
+  "homepage": "https://github.com/ElderBass/Team-Profile-Generator#readme",
+  "dependencies": {
+    "inquirer": "^7.3.3"
+  }
+}
