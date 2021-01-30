@@ -1,29 +1,15 @@
-const inquirer = require("inquirer");
 const Employee = require('./Employee.js')
 
 
 class Manager extends Employee {
-    constructor(office = 0) {
-        super(this.getName, this.getId, this.getEmail);
-        this.office = office;
+    constructor(name, id, email, officeNumber) {
+        super(name, id, email);
+        this.officeNumber = officeNumber;
     }
 
-    getOfficeNumber() {
-            inquirer
-                .prompt({
-                    type: 'input',
-                    message: "Please enter manager's office number:",
-                    name: 'office'
-                })
-                .then(response => {
-                    this.office = response.office;
-                    return response.office;
-                })
-        }
-        //getOfficeNumber()
-    getRole() {
-        return 'Manager'
-    }
+    getOfficeNumber = () => this.officeNumber;
+
+    getRole = () => 'Manager';
 }
 
 module.exports = Manager;
