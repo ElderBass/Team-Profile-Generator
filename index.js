@@ -33,7 +33,7 @@ const employeeQuestions = [{
 ]
 
 
-const employees = []
+const employees = [];
 
 const createManager = () => {
     inquirer
@@ -120,7 +120,7 @@ const createEmployee = () => {
             name: 'employee'
         }).then(response => {
             if (response.employee === 'Manager') {
-                //do manager stuff
+
                 createManager();
             }
             if (response.employee === 'Engineer') {
@@ -135,24 +135,48 @@ const createEmployee = () => {
 
 const init = () => {
 
-    inquirer
-        .prompt({
-            type: 'list',
-            message: "What would you like to do?",
-            choices: ['Add Employee', 'Finish Document'],
-            name: 'start'
-        })
-        .then(response => {
+    if (employees.length === 0) {
+        inquirer
+            .prompt({
+                type: "list",
+                message: 'Welcome to Dream Team Supreme! Please start by entering the manager of your team.',
+                name: 'start',
+                choices: ['Continue']
+            })
+            .then(answer => {
+                if (answer.start === 'Continue') {
+                    createManager();
+                }
+            })
+    } else {
+        inquirer
+            .prompt({
+                type: 'list',
+                message: "What would you like to do?",
+                choices: ['Add Employee', 'Finish Document'],
+                name: 'start'
+            })
+            .then(response => {
 
-            if (response.start === 'Add Employee') {
-                createEmployee();
-            }
-            if (response.start === 'Finish Document') {
+                if (response.start === 'Add Employee') {
+                    createEmployee();
+                }
+                if (response.start === 'Finish Document') {
+                    inquirer.prompt({
+                            type: 'input',
+                            message: 'What is the name of your project and/or team?',
+                            name: 'team'
+                        })
+                        .then(answer => {
 
-                fs.writeFile('index.html', team(employees), (err) =>
-                    err ? console.error(err) : console.log('Success!'))
-            }
-        })
+                            fs.mkdirSync(__dirname + "/dist/" + `${answer.team}/`);
+                            fs.writeFileSync(__dirname + "/dist/" + `${answer.team}/` + "index.html", team(employees), (err) =>
+                                err ? console.error(err) : console.log('Success!'))
+                        })
+
+                }
+            })
+    }
 }
 
 init();
