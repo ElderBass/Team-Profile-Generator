@@ -1,19 +1,12 @@
+//all the imports we'll need to run this application 
 const inquirer = require("inquirer");
 const fs = require('fs');
-const team = require('./Develop/src/page-template.js');
-const Manager = require("./Develop/lib/Manager.js");
-const Employee = require("./Develop/lib/Employee.js");
-const Intern = require("./Develop/lib/Intern.js");
-const Engineer = require("./Develop/lib/Engineer.js");
+const team = require('./src/page-template.js');
+const Manager = require("./lib/Manager.js");
+const Employee = require("./lib/Employee.js");
+const Intern = require("./lib/Intern.js");
+const Engineer = require("./lib/Engineer.js");
 
-
-
-//questions for employee 
-// .then >> create Employee object
-//type of employee :
-// if manager >> create Manager Object
-// else intern >> create Intern Object
-//write file with objects you created.
 
 const employeeQuestions = [{
         type: 'input',
@@ -115,7 +108,7 @@ const createEmployee = () => {
     inquirer
         .prompt({
             type: 'list',
-            message: "What type of employee would like to add? (Please start with Manager if you haven't added one already)",
+            message: "What type of employee would like to add?",
             choices: ['Manager', 'Engineer', 'Intern'],
             name: 'employee'
         }).then(response => {
@@ -131,6 +124,40 @@ const createEmployee = () => {
 
             }
         })
+}
+
+//function to render our CSS styling, which will be written as a new file once the team is generated
+const generateCSS = () => {
+    return `
+    * {
+        font-family: 'Ubuntu';
+        box-sizing: border-box;
+    }
+    
+    .team-heading {
+        background-color: rgb(78, 4, 78);
+        color: white;
+    }
+    
+    .team-area {
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+    
+    .employee-card {
+        box-shadow: 10px 10px 10px rgb(78, 4, 78);
+        margin-top: 15px;
+    }
+    
+    .card-header {
+        color: white;
+        background-color: rgb(49, 36, 129);
+    }
+    
+    .card-body {
+        color: rgb(78, 4, 78);
+    }
+    `
 }
 
 const init = () => {
@@ -168,9 +195,14 @@ const init = () => {
                             name: 'team'
                         })
                         .then(answer => {
-
+                            //create a new folder, whose name is derived from above prompt, that will contain the html and css files generated
                             fs.mkdirSync(__dirname + "/dist/" + `${answer.team}/`);
+
+                            //create our new html file inside the folder chain we just created above
                             fs.writeFileSync(__dirname + "/dist/" + `${answer.team}/` + "index.html", team(employees), (err) =>
+                                    err ? console.error(err) : console.log('Success!'))
+                                //add our style.css file to the folder alongside the html so the generated html will look extra nice
+                            fs.writeFileSync(__dirname + "/dist/" + `${answer.team}/` + "style.css", generateCSS(), (err) =>
                                 err ? console.error(err) : console.log('Success!'))
                         })
 
@@ -178,5 +210,6 @@ const init = () => {
             })
     }
 }
+
 
 init();
