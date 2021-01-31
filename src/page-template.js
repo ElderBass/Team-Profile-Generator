@@ -1,3 +1,5 @@
+//this page hasn't been touched other than to fix some typos
+
 // create the team
 const generateTeam = team => {
 
