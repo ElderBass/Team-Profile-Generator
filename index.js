@@ -2,8 +2,8 @@
 const inquirer = require("inquirer");
 const fs = require('fs');
 const team = require('./src/page-template.js');
+const Employee = require("./lib/Employee.js"); //not sure we actually need this one but since all the other employees depend on it, it felt wrong not to include it lol
 const Manager = require("./lib/Manager.js");
-const Employee = require("./lib/Employee.js");
 const Intern = require("./lib/Intern.js");
 const Engineer = require("./lib/Engineer.js");
 
