@@ -55,7 +55,7 @@ npm run test
 
 To view a demonstration of this application and how to test it, follow this link:
 
-[Team Profile Generator Demonstration]()
+[Team Profile Generator Demonstration](https://drive.google.com/file/d/1yVEBsY_OqGlqgzaX50RhWLNsjBpzxZEP/view)
 
 # Questions
 

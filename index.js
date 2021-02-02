@@ -205,20 +205,34 @@ const init = () => {
                     //start with this prompt which will ask for the project or team's name, which will be the new folder's name in dist that holds the new html file
                     inquirer.prompt({
                             type: 'input',
-                            message: 'What is the name of your project and/or team?',
+                            message: 'Please enter a name for your team without using spaces or special characters:',
                             name: 'team'
                         })
                         .then(answer => {
-                            //create a new folder, whose name is derived from above prompt, that will contain the html and css files generated
-                            fs.mkdirSync(__dirname + "/dist/" + `${answer.team}/`);
+                            //if we haven't already made a new 'dist' folder for our html, we do so here
+                            if (!fs.existsSync(__dirname + "/dist/")) {
 
-                            //create our new html file inside the folder chain we just created above
-                            fs.writeFileSync(__dirname + "/dist/" + `${answer.team}/` + "index.html", team(employees), (err) =>
-                                err ? console.error(err) : console.log('Success!'))
+                                //create new dist folder
+                                fs.mkdirSync(__dirname + "/dist/");
+                                //create a folder within 'dist' that's named whatever user put in for their team/project name
+                                fs.mkdirSync(__dirname + "/dist/" + `${answer.team}/`);
 
-                            //add our style.css file to the folder alongside the html so the generated html will look extra nice
-                            fs.writeFileSync(__dirname + "/dist/" + `${answer.team}/` + "style.css", generateCSS(), (err) =>
-                                err ? console.error(err) : console.log('Success!'))
+                                //create our new html file inside the folder chain we just created above
+                                fs.writeFileSync(__dirname + "/dist/" + `${answer.team}/` + "index.html", team(employees), (err) =>
+                                    err ? console.error(err) : console.log('Success!'))
+
+                                //add our style.css file to the folder alongside the html so the generated html will look extra nice
+                                fs.writeFileSync(__dirname + "/dist/" + `${answer.team}/` + "style.css", generateCSS(), (err) =>
+                                    err ? console.error(err) : console.log('Success!'))
+
+                            } else {
+                                //if we already have a dist folder, then just populate it with our new team folder and corresponding files
+                                fs.mkdirSync(__dirname + "/dist/" + `${answer.team}/`);
+                                fs.writeFileSync(__dirname + "/dist/" + `${answer.team}/` + "index.html", team(employees), (err) =>
+                                    err ? console.error(err) : console.log('Success!'))
+                                fs.writeFileSync(__dirname + "/dist/" + `${answer.team}/` + "style.css", generateCSS(), (err) =>
+                                    err ? console.error(err) : console.log('Success!'))
+                            }
                         })
                 }
             })
