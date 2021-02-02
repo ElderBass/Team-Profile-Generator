@@ -175,7 +175,7 @@ const init = () => {
         inquirer
             .prompt({
                 type: "list",
-                message: 'Welcome to Dream Team Supreme! Please start by entering the manager of your team.',
+                message: 'Welcome to Dream Team Supreme, the go-to app for team profile generation! Please start by entering the manager of your team.',
                 name: 'start',
                 choices: ['Continue'] //don't give the user a choice in the matter lol
             })
